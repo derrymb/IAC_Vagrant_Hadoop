@@ -5,14 +5,14 @@
 
 Vagrant.configure("2") do |config|
   
-  config.vm.provision :shell, privileged: true, inline: $install_common
+  config.vm.provision :shell, privileged: true, path: "install.sh"
 
-  config.vm.define "node01" do |node01|
-    node01.vm.box = "ubuntu/focal64"
-    node01.vm.synced_folder ".", "/home/vagrant/data"
-    node01.vm.network "private_network", ip: "172.16.0.10"
-    node01.vm.hostname = "node01"
-    node01.vm.provider "virtualbox" do |vb|
+  config.vm.define "main" do |main|
+    main.vm.box = "ubuntu/focal64"
+    main.vm.synced_folder ".", "/home/vagrant/data"
+    main.vm.network "private_network", ip: "172.16.0.10"
+    main.vm.hostname = "main"
+    main.vm.provider "virtualbox" do |vb|
         vb.memory = 1048
         vb.cpus = 1
     end
@@ -39,13 +39,13 @@ Vagrant.configure("2") do |config|
   end
 end
 
-$install_common = <<-SCRIPT
-# install ifconfig
-apt install -y net-tools
-# disable firewall
-ufw disable
-# config hosts file for all vms
-sudo echo "172.16.0.10 node01" | sudo tee -a /etc/hosts
-sudo echo "172.16.0.20 node02" | sudo tee -a /etc/hosts
-sudo echo "172.16.0.30 node03" | sudo tee -a /etc/hosts
-SCRIPT
+# $install_common = <<-SCRIPT
+# # install ifconfig
+# apt install -y net-tools
+# # disable firewall
+# ufw disable
+# # config hosts file for all vms
+# sudo echo "172.16.0.10 main" | sudo tee -a /etc/hosts
+# sudo echo "172.16.0.20 node02" | sudo tee -a /etc/hosts
+# sudo echo "172.16.0.30 node03" | sudo tee -a /etc/hosts
+# SCRIPT
