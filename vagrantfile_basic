@@ -1,0 +1,5 @@
+config.vm.box - Operating System
+config.vm.provider - virtualbox
+config.vm.network - networking Ip address
+config.vm.synced_folder - How to access local file on computer
+config.vm.provision - what we want to set up
